@@ -1,0 +1,5 @@
+forecast_io: 'your-api-key'
+sendhub:
+  api_key: 'your-api-key'
+  username: 'your-phone-number'
+  recipient_id: 'id-of-recipient-phone-number'

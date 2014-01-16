@@ -4,6 +4,7 @@ alert_threshold: 20
 outlook_range: 12
 lat: 41.8819
 lng: -87.6278
+alert_time: 4:30am
 sendhub:
   api_key: 'your-api-key'
   username: 'your-phone-number'

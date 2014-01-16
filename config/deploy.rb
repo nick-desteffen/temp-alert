@@ -8,6 +8,8 @@ set :pty, true
 set :linked_files, %w{config/settings.yml}
 set :keep_releases, 5
 
+I18n.enforce_available_locales = false
+
 namespace :deploy do
 
   desc 'Restart application'

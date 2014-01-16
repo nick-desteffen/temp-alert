@@ -22,7 +22,7 @@ class TempAlert
 private
 
   def alert
-    messages = ["Warning, low temperature tonight, (#{coldest_temp}F)", summary]
+    messages = ["Warning, low temperature tonight: (#{coldest_temp}F)", summary]
     if @config.alert_mode == 'text_message'
       headers = {"content-type" => "application/json"}
       messages.each do |message|

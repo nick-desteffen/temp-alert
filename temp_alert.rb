@@ -16,16 +16,31 @@ class TempAlert
   end
 
   def alert
-    body = {
-      contacts: [Config.sendhub.recipient_id],
-      text: "Going to be cold"
-    }
-    headers =  {"content-type" => "application/json"}
-    response = Typhoeus.post("https://api.sendhub.com/v1/messages/?username=#{Config.sendhub.username}\&api_key=#{Config.sendhub.api_key}", body: body.to_json, headers: headers)
+    messages = ["Warning, low temperature tonight, (#{coldest_temp}F)", summary]
+    if Config.alert_mode == 'text_message'
+      headers = {"content-type" => "application/json"}
+      messages.each do |message|
+        body = {
+          contacts: [Config.sendhub.recipient_id],
+          text: message
+        }
+        response = Typhoeus.post("https://api.sendhub.com/v1/messages/?username=#{Config.sendhub.username}\&api_key=#{Config.sendhub.api_key}", body: body.to_json, headers: headers)
+      end
+    else
+      puts messages.inspect
+    end
   end
 
   def very_cold?
-    @forecast.currently.apparentTemperature <= 20
+    coldest_temp <= Config.alert_threshold
+  end
+
+  def coldest_temp
+    @coldest_temp ||= @forecast.hourly.data[0..(Config.outlook_range - 1)].map(&:apparentTemperature).sort.first
+  end
+
+  def summary
+    @summary ||= @forecast.hourly.summary
   end
 
   def self.check(lat, lng)

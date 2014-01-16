@@ -2,6 +2,8 @@ forecast_io: 'your-api-key'
 alert_mode: 'console or text_message'
 alert_threshold: 20
 outlook_range: 12
+lat: 41.8819
+lng: -87.6278
 sendhub:
   api_key: 'your-api-key'
   username: 'your-phone-number'

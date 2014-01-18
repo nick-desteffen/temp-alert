@@ -11,13 +11,5 @@ set :keep_releases, 5
 I18n.enforce_available_locales = false
 
 namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      ## NOOP
-    end
-  end
-
   after :finishing, 'deploy:cleanup'
 end

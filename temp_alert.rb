@@ -1,6 +1,6 @@
 class TempAlert
   require 'forecast_io'
-  require 'typhoeus'
+  require 'eztexting'
 
   def initialize(config)
     @config = config
@@ -8,6 +8,7 @@ class TempAlert
     @lng    = config.lng
 
     ForecastIO.api_key = config.forecast_io
+    Eztexting.connect!(@config.eztexting.username, @config.eztexting.password)
   end
 
   def check
@@ -24,13 +25,8 @@ private
   def alert
     messages = ["Warning, low temperature tonight: (#{coldest_temp}F)", summary]
     if @config.alert_mode == 'text_message'
-      headers = {"content-type" => "application/json"}
       messages.each do |message|
-        body = {
-          contacts: [@config.sendhub.recipient_id],
-          text: message
-        }
-        response = Typhoeus.post("https://api.sendhub.com/v1/messages/?username=#{@config.sendhub.username}\&api_key=#{@config.sendhub.api_key}", body: body.to_json, headers: headers)
+        Eztexting::Sms.single(phonenumber: @config.eztexting.recipient_number, message: message)
       end
     else
       puts messages.inspect

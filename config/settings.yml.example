@@ -5,7 +5,7 @@ outlook_range: 12
 lat: 41.8819
 lng: -87.6278
 alert_time: 4:30am
-sendhub:
-  api_key: 'your-api-key'
-  username: 'your-phone-number'
-  recipient_id: 'id-of-recipient-phone-number'
+eztexting:
+  username: username
+  password: password
+  recipient_number: phonenumber

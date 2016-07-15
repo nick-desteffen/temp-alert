@@ -9,7 +9,3 @@ set :linked_files, %w{config/settings.yml}
 set :keep_releases, 5
 
 I18n.enforce_available_locales = false
-
-namespace :deploy do
-  after :finishing, 'deploy:cleanup'
-end
